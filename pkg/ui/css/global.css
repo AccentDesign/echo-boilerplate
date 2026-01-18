@@ -1,214 +1,24 @@
 @import "tailwindcss" source(none);
 @source "../";
 
-/* light theme variables */
-
-@theme {
-    --color-background: oklch(1 0 0);
-    --color-foreground: oklch(0.145 0 0);
-    --color-card: oklch(1 0 0);
-    --color-card-foreground: oklch(0.145 0 0);
-    --color-popover: oklch(1 0 0);
-    --color-popover-foreground: oklch(0.145 0 0);
-    --color-primary: oklch(0.205 0 0);
-    --color-primary-foreground: oklch(0.985 0 0);
-    --color-secondary: oklch(0.97 0 0);
-    --color-secondary-foreground: oklch(0.205 0 0);
-    --color-muted: oklch(0.97 0 0);
-    --color-muted-foreground: oklch(0.556 0 0);
-    --color-accent: oklch(0.97 0 0);
-    --color-accent-foreground: oklch(0.205 0 0);
-    --color-destructive: oklch(0.577 0.245 27.325);
-    --color-destructive-foreground: oklch(1 0 0);
-    --color-border: oklch(0.922 0 0);
-    --color-input: oklch(0.922 0 0);
+@plugin "daisyui" {
+    themes: light --default, dark --prefersdark;
 }
-
-/* dark theme variables */
-
-@layer base {
-    @media (prefers-color-scheme: dark) {
-        :host, /* host for web components */
-        :root {
-            --color-background: oklch(0.145 0 0);
-            --color-foreground: oklch(0.985 0 0);
-            --color-card: oklch(0.205 0 0);
-            --color-card-foreground: oklch(0.985 0 0);
-            --color-popover: oklch(0.269 0 0);
-            --color-popover-foreground: oklch(0.985 0 0);
-            --color-primary: oklch(0.922 0 0);
-            --color-primary-foreground: oklch(0.205 0 0);
-            --color-secondary: oklch(0.269 0 0);
-            --color-secondary-foreground: oklch(0.985 0 0);
-            --color-muted: oklch(0.269 0 0);
-            --color-muted-foreground: oklch(0.708 0 0);
-            --color-accent: oklch(0.371 0 0);
-            --color-accent-foreground: oklch(0.985 0 0);
-            --color-destructive: oklch(0.704 0.191 22.216);
-            --color-destructive-foreground: oklch(1 0 0);
-            --color-border: oklch(1 0 0 / 10%);
-            --color-input: oklch(1 0 0 / 15%);
-        }
-    }
-}
-
-/* base */
 
 @layer base {
     body {
-        @apply antialiased bg-background text-foreground;
+        @apply bg-base-200 min-h-screen antialiased;
     }
 }
 
-/* alpinejs */
+@layer utilities.daisyui.component {
+    .input {
+        @apply w-full;
+    }
+}
+
 @layer utilities {
     [x-cloak] {
         @apply hidden;
-    }
-}
-
-/* typography */
-
-@layer components {
-    .owl-h1 {
-        @apply text-3xl font-semibold tracking-tight;
-    }
-    .owl-h2 {
-        @apply text-2xl font-semibold tracking-tight;
-    }
-    .owl-h3 {
-        @apply text-xl font-semibold tracking-tight;
-    }
-    .owl-h4 {
-        @apply text-lg font-semibold tracking-tight;
-    }
-    .owl-p {
-        @apply leading-7;
-    }
-    .owl-anchor {
-        @apply font-medium hover:underline hover:underline-offset-4;
-    }
-    [icon] {
-        @apply inline-flex;
-    }
-}
-
-/* cards */
-
-@layer components {
-    .owl-card {
-        @apply relative grid gap-4 py-4 w-full rounded-lg border border-border bg-card text-card-foreground;
-    }
-    .owl-card-header {
-        @apply relative flex flex-col space-y-1.5 px-4;
-    }
-    .owl-card-title {
-        @apply text-lg font-semibold leading-none tracking-tight;
-    }
-    .owl-card-description {
-        @apply text-sm text-muted-foreground;
-    }
-    .owl-card-actions {
-        @apply flex items-center gap-1 absolute top-0 right-4;
-    }
-    .owl-card-content {
-        @apply grid gap-4 px-4;
-    }
-    .owl-card-footer {
-        @apply flex items-center px-4;
-    }
-}
-
-/* dropdown menu */
-
-@layer components {
-    .owl-dropdown-menu {
-        @apply relative inline-flex;
-    }
-    .owl-dropdown-menu-content {
-        @apply z-50 min-w-[8rem] overflow-hidden rounded-md border border-border bg-popover p-1 shadow-md w-56 absolute top-11;
-    }
-    .owl-dropdown-menu-label {
-        @apply px-2 py-1.5 text-sm font-semibold;
-    }
-    .owl-dropdown-menu-separator {
-        @apply -mx-1 my-1 h-px bg-muted;
-    }
-    .owl-dropdown-menu-item {
-        @apply w-full relative flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none;
-        @apply hover:bg-accent hover:text-accent-foreground;
-    }
-}
-
-/* forms */
-
-@layer components {
-    .owl-label {
-        @apply inline-block text-sm font-medium leading-none cursor-pointer;
-    }
-    .owl-input, .owl-select, .owl-textarea {
-        @apply flex w-full bg-input/30 rounded-md border border-input px-3 py-2 text-sm;
-    }
-    .owl-input {
-        @apply h-10;
-        @apply file:border-0 file:bg-transparent file:text-sm file:font-medium;
-    }
-    .owl-select {
-        @apply h-10;
-    }
-    .owl-textarea {
-        @apply min-h-[80px];
-    }
-    .owl-checkbox {
-        @apply size-4 shrink-0 rounded-sm border border-input accent-primary;
-    }
-    .owl-form-field {
-        @apply space-y-2;
-    }
-    .owl-form-field-error {
-        @apply text-sm text-destructive;
-    }
-    .owl-form-field-description {
-        @apply text-sm text-muted-foreground;
-    }
-    .owl-form-field:has(.owl-form-field-error) {
-        .owl-label {
-            @apply text-destructive;
-        }
-        .owl-input, .owl-select, .owl-textarea, .owl-checkbox {
-            @apply border-destructive;
-        }
-    }
-}
-
-/* buttons */
-
-@layer components {
-    .owl-button {
-        @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md h-10 px-4 py-2 text-sm font-medium cursor-pointer bg-primary text-primary-foreground;
-        @apply hover:bg-primary/80;
-    }
-    .owl-button-icon {
-        @apply size-10 p-0 text-base;
-    }
-    .owl-button-secondary {
-        @apply bg-secondary text-secondary-foreground;
-        @apply hover:bg-secondary/80;
-    }
-    .owl-button-destructive {
-        @apply bg-destructive text-destructive-foreground;
-        @apply hover:bg-destructive/90;
-    }
-    .owl-button-outline {
-        @apply bg-transparent text-foreground border border-input;
-        @apply hover:bg-secondary/80;
-    }
-    .owl-button-ghost {
-        @apply bg-transparent text-foreground;
-        @apply hover:bg-secondary/80;
-    }
-    .owl-button-link {
-        @apply bg-transparent text-foreground;
-        @apply hover:bg-transparent hover:underline hover:underline-offset-4;
     }
 }

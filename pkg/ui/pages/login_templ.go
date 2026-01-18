@@ -48,32 +48,32 @@ func Login(props LoginProps) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"min-h-screen flex flex-col items-center justify-center p-5\"><form id=\"login_form\" class=\"owl-card max-w-[400px] w-full\" hx-post=\"/auth/login\" hx-swap-oob=\"true\"><div class=\"owl-card-header\"><div class=\"owl-card-title\">Login</div><div class=\"owl-card-description\">Login to access your account.</div></div><div class=\"owl-card-content\"><input name=\"_csrf\" type=\"hidden\" value=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"min-h-screen flex flex-col items-center justify-center p-6\"><form id=\"login_form\" class=\"card w-sm max-w-full bg-base-100 shadow-xl\" hx-post=\"/auth/login\" hx-swap-oob=\"true\"><div class=\"card-body\"><h2 class=\"card-title\">Login</h2><p class=\"text-base-content/60\">Login to access your account.</p><fieldset class=\"fieldset\"><input name=\"_csrf\" type=\"hidden\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(props.Csrf)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/ui/pages/login.templ`, Line: 21, Col: 57}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/ui/pages/login.templ`, Line: 20, Col: 58}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\" hidden><div class=\"owl-form-field\"><label class=\"owl-label\" for=\"email\">Email</label> <input class=\"owl-input\" type=\"email\" name=\"email\" id=\"email\" placeholder=\"Email\" required></div><div class=\"owl-form-field\"><label class=\"owl-label\" for=\"password\">Password</label> <input class=\"owl-input\" type=\"password\" name=\"password\" id=\"password\" placeholder=\"Password\" required></div></div><div class=\"owl-card-footer grid grid-cols-1 gap-4\"><button class=\"owl-button w-full\" type=\"submit\">Login</button> ")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\" hidden> <label class=\"label\" for=\"email\">Email</label> <input class=\"input\" type=\"email\" name=\"email\" id=\"email\" placeholder=\"Email\" required> <label class=\"label\" for=\"password\">Password</label> <input class=\"input\" type=\"password\" name=\"password\" id=\"password\" placeholder=\"Password\" required> <button class=\"btn btn-neutral mt-4\" type=\"submit\">Login</button> ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			if props.Error != "" {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<div class=\"owl-form-field-error\">")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<div class=\"label text-error\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				var templ_7745c5c3_Var4 string
 				templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(props.Error)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/ui/pages/login.templ`, Line: 34, Col: 53}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/ui/pages/login.templ`, Line: 27, Col: 50}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 				if templ_7745c5c3_Err != nil {
@@ -84,7 +84,7 @@ func Login(props LoginProps) templ.Component {
 					return templ_7745c5c3_Err
 				}
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div></form></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</fieldset></div></form></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

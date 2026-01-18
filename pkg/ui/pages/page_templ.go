@@ -47,7 +47,7 @@ func PageTemplate(page Page) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, " <div class=\"px-5 grid gap-5\" hx-boost=\"true\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, " <div class=\"grid gap-5 p-6\" hx-boost=\"true\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -92,7 +92,7 @@ func PageBanner(page Page) templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<header><div class=\"flex p-5 justify-between items-center\"><a class=\"owl-h3\" href=\"/\">Echo Boilerplate</a><div class=\"owl-dropdown-menu\" x-data=\"{\n\t\t\t    opened: false\n\t\t\t}\"><button class=\"owl-button owl-button-ghost\" @click=\"opened = !opened\"><span>My Account</span> <svg class=\"size-4\" xmlns=\"http://www.w3.org/2000/svg\"><use xlink:href=\"/static/svg/icons.svg#chevron-down\"></use></svg></button><div class=\"owl-dropdown-menu-content right-0\" role=\"menu\" x-cloak x-show=\"opened\" x-transition:enter=\"ease-out duration-200\" x-transition:enter-start=\"-translate-y-2\" x-transition:enter-end=\"translate-y-0\" @click.away=\"opened = false\"><div class=\"owl-dropdown-menu-label\">My Account</div><div class=\"owl-dropdown-menu-separator\" role=\"separator\"></div><a href=\"/auth/logout\" class=\"owl-dropdown-menu-item\" role=\"menuitem\">Logout</a></div></div></div></header>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<header><div class=\"navbar\"><div class=\"flex-1\"><a class=\"btn btn-ghost text-xl\">Echo Boilerplate</a></div><div class=\"flex-none\"><a class=\"btn btn-ghost\" href=\"/auth/logout\">Logout</a></div></div></header>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

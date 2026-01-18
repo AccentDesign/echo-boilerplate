@@ -11,28 +11,22 @@ templ Login(props LoginProps) {
 	@layouts.Base(layouts.Layout{
 		Title: "Login",
 	}) {
-		<div class="min-h-screen flex flex-col items-center justify-center p-5">
-			<form id="login_form" class="owl-card max-w-[400px] w-full" hx-post="/auth/login" hx-swap-oob="true">
-				<div class="owl-card-header">
-					<div class="owl-card-title">Login</div>
-					<div class="owl-card-description">Login to access your account.</div>
-				</div>
-				<div class="owl-card-content">
-					<input name="_csrf" type="hidden" value={ props.Csrf } hidden/>
-					<div class="owl-form-field">
-						<label class="owl-label" for="email">Email</label>
-						<input class="owl-input" type="email" name="email" id="email" placeholder="Email" required/>
-					</div>
-					<div class="owl-form-field">
-						<label class="owl-label" for="password">Password</label>
-						<input class="owl-input" type="password" name="password" id="password" placeholder="Password" required/>
-					</div>
-				</div>
-				<div class="owl-card-footer grid grid-cols-1 gap-4">
-					<button class="owl-button w-full" type="submit">Login</button>
-					if props.Error != "" {
-						<div class="owl-form-field-error">{ props.Error }</div>
-					}
+		<div class="min-h-screen flex flex-col items-center justify-center p-6">
+			<form id="login_form" class="card w-sm max-w-full bg-base-100 shadow-xl" hx-post="/auth/login" hx-swap-oob="true">
+				<div class="card-body">
+					<h2 class="card-title">Login</h2>
+					<p class="text-base-content/60">Login to access your account.</p>
+					<fieldset class="fieldset">
+						<input name="_csrf" type="hidden" value={ props.Csrf } hidden/>
+						<label class="label" for="email">Email</label>
+						<input class="input" type="email" name="email" id="email" placeholder="Email" required/>
+						<label class="label" for="password">Password</label>
+						<input class="input" type="password" name="password" id="password" placeholder="Password" required/>
+						<button class="btn btn-neutral mt-4" type="submit">Login</button>
+						if props.Error != "" {
+							<div class="label text-error">{ props.Error }</div>
+						}
+					</fieldset>
 				</div>
 			</form>
 		</div>

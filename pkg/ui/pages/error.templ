@@ -15,12 +15,14 @@ templ Error(props ErrorProps) {
 	@layouts.Base(layouts.Layout{
 		Title: props.Title,
 	}) {
-		<div class="min-h-screen flex flex-col items-center justify-center p-5">
-			<div class="w-full max-w-[500px]">
-				<h1 class="owl-h1">{ fmt.Sprintf("%d", props.Code) } <span class="text-base font-normal">{ props.Title }</span></h1>
-				<p class="owl-p">{ props.Message }</p>
-				<p class="owl-p"><a class="owl-anchor" href="/">Back to Home</a></p>
-			</div>
-		</div>
+        <div class="min-h-screen flex flex-col items-center justify-center p-6">
+            <div class="card bg-base-200 border-base-300 rounded-box border w-sm max-w-full">
+                <div class="card-body">
+                    <h2 class="card-title">{ fmt.Sprintf("%d", props.Code) } { props.Title }</h2>
+                    <p>{ props.Message }</p>
+                    <a class="btn btn-neutral mt-4" href="/">Back to Home</a>
+                </div>
+            </div>
+        </div>
 	}
 }
