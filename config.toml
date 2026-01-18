@@ -11,7 +11,7 @@ db = "echo-boilerplate"
 ssl_mode = "disable"  # "disable", "allow", "prefer", "require"
 
 [security]
-allowed_hosts = []
+allow_origins = []
 hsts_max_age = 3600
 xss_protection = "1; mode=block"
 content_type_nosniff = "nosniff"
@@ -26,6 +26,7 @@ csp_font_src = "'self'"
 [session]
 key = "13d45bf0a822b832cc8886fa41ce4ced30584189bad02ec8ce552ace0d1ae8b1"  # hex encoded 32 byte string
 enc_key = "2bb61a68ac3dec4f7c25efb062f4ae3b"  # hex encoded 16 byte string
+trusted_origins = []
 path = "/"
 domain = ""
 max_age = 2592000

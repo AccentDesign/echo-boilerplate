@@ -3,13 +3,14 @@ package config
 import (
 	"encoding/hex"
 	"fmt"
-	"github.com/spf13/viper"
 	"log"
 	"net"
 	"net/http"
 	"net/url"
 	"strings"
 	"sync"
+
+	"github.com/spf13/viper"
 )
 
 type (
@@ -81,7 +82,7 @@ type DatabaseConfig struct {
 
 // SecurityConfig represents the security configuration.
 type SecurityConfig struct {
-	AllowedHosts       []string `mapstructure:"allowed_hosts"`
+	AllowOrigins       []string `mapstructure:"allow_origins"`
 	HSTSMaxAge         int      `mapstructure:"hsts_max_age"`
 	XSSProtection      string   `mapstructure:"xss_protection"`
 	ContentTypeNosniff string   `mapstructure:"content_type_nosniff"`
@@ -96,14 +97,15 @@ type SecurityConfig struct {
 
 // SessionConfig represents the session configuration.
 type SessionConfig struct {
-	Key      string        `mapstructure:"key"`
-	EncKey   string        `mapstructure:"enc_key"`
-	Path     string        `mapstructure:"path"`
-	Domain   string        `mapstructure:"domain"`
-	MaxAge   int           `mapstructure:"max_age"`
-	Secure   bool          `mapstructure:"secure"`
-	HttpOnly bool          `mapstructure:"http_only"`
-	SameSite http.SameSite `mapstructure:"same_site"`
+	Key            string        `mapstructure:"key"`
+	EncKey         string        `mapstructure:"enc_key"`
+	TrustedOrigins []string      `mapstructure:"trusted_origins"`
+	Path           string        `mapstructure:"path"`
+	Domain         string        `mapstructure:"domain"`
+	MaxAge         int           `mapstructure:"max_age"`
+	Secure         bool          `mapstructure:"secure"`
+	HttpOnly       bool          `mapstructure:"http_only"`
+	SameSite       http.SameSite `mapstructure:"same_site"`
 }
 
 // URL returns the database URL.

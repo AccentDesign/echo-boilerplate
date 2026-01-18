@@ -1,9 +1,10 @@
 package middleware
 
 import (
-	"github.com/labstack/echo/v4"
 	"net/http"
 	"strings"
+
+	"github.com/labstack/echo/v5"
 )
 
 var AllowContentTypeForm = AllowContentType("application/x-www-form-urlencoded")
@@ -17,7 +18,7 @@ func AllowContentType(contentTypes ...string) echo.MiddlewareFunc {
 	}
 
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
-		return func(c echo.Context) error {
+		return func(c *echo.Context) error {
 			s := strings.ToLower(strings.TrimSpace(c.Request().Header.Get(echo.HeaderContentType)))
 			if _, ok := allowedContentTypes[s]; ok {
 				return next(c)

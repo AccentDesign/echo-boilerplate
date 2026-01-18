@@ -2,16 +2,17 @@ package middleware
 
 import (
 	"context"
+
 	"echo.go.dev/pkg/storage/db/dbx"
 	"github.com/a-h/templ"
 	"github.com/gorilla/sessions"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/labstack/echo-contrib/session"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 )
 
 type CustomContext struct {
-	echo.Context
+	*echo.Context
 	Postgres *pgxpool.Pool
 	Queries  *dbx.Queries
 	Session  *sessions.Session
@@ -30,7 +31,7 @@ func (c *CustomContext) RenderComponent(statusCode int, t templ.Component) error
 }
 
 func (c *CustomContext) Reverse(url string, params ...interface{}) string {
-	return c.Echo().Reverse(url, params...)
+	return c.Reverse(url, params...)
 }
 
 func (c *CustomContext) IsHTMXRequest() bool {
@@ -70,7 +71,7 @@ func Context(postgres *pgxpool.Pool) echo.MiddlewareFunc {
 	queries := dbx.New(postgres)
 
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
-		return func(c echo.Context) error {
+		return func(c *echo.Context) error {
 			sess, err := session.Get("session", c)
 			// if there is a problem with the session try to reset it
 			if err != nil {
@@ -85,7 +86,8 @@ func Context(postgres *pgxpool.Pool) echo.MiddlewareFunc {
 				Queries:  queries,
 				Session:  sess,
 			}
-			return next(cc)
+			c.Set("custom_context", cc)
+			return next(c)
 		}
 	}
 }

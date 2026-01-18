@@ -1,24 +1,27 @@
 package errors
 
 import (
+	"errors"
+	"net/http"
+
 	"echo.go.dev/pkg/transport/middleware"
 	"echo.go.dev/pkg/ui/pages"
-	"errors"
-	"github.com/labstack/echo/v4"
-	"net/http"
+	"github.com/labstack/echo/v5"
 )
 
-func HttpErrorHandler(err error, c echo.Context) {
-	if c.Response().Committed {
-		return
+func HttpErrorHandler(c *echo.Context, err error) {
+	if resp, uErr := echo.UnwrapResponse(c.Response()); uErr == nil {
+		if resp.Committed {
+			return
+		}
 	}
 
-	c.Logger().Error(err)
-
 	code := http.StatusInternalServerError
-	var he *echo.HTTPError
-	if errors.As(err, &he) {
-		code = he.Code
+	var sc echo.HTTPStatusCoder
+	if errors.As(err, &sc) {
+		if tmp := sc.StatusCode(); tmp != 0 {
+			code = tmp
+		}
 	}
 
 	message := "An unexpected error occurred on the server."
@@ -27,12 +30,12 @@ func HttpErrorHandler(err error, c echo.Context) {
 		message = "The requested URL was not found on this server."
 	}
 
-	cc := middleware.CustomContext{Context: c}
+	cc := c.Get("custom_context").(*middleware.CustomContext)
 	if err := cc.RenderComponent(code, pages.Error(pages.ErrorProps{
 		Code:    code,
 		Title:   http.StatusText(code),
 		Message: message,
 	})); err != nil {
-		c.Logger().Error(err)
+		c.Logger().Error(err.Error())
 	}
 }

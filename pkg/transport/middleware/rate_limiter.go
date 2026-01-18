@@ -1,11 +1,11 @@
 package middleware
 
 import (
-	"github.com/labstack/echo/v4"
-	echomiddleware "github.com/labstack/echo/v4/middleware"
-	"golang.org/x/time/rate"
 	"net/http"
 	"time"
+
+	"github.com/labstack/echo/v5"
+	echomiddleware "github.com/labstack/echo/v5/middleware"
 )
 
 // RateLimit returns an Echo middleware function for rate limiting.
@@ -16,14 +16,14 @@ func RateLimit() echo.MiddlewareFunc {
 
 	rateStore := echomiddleware.NewRateLimiterMemoryStoreWithConfig(
 		echomiddleware.RateLimiterMemoryStoreConfig{
-			Rate:      rate.Limit(10),
+			Rate:      float64(10),
 			Burst:     10,
 			ExpiresIn: 1 * time.Minute,
 		},
 	)
 
 	rateConfig := echomiddleware.RateLimiterConfig{
-		Skipper: func(c echo.Context) bool {
+		Skipper: func(c *echo.Context) bool {
 			key := c.Request().Method + ":" + c.Path()
 			if _, ok := ratePaths[key]; ok {
 				return false
@@ -31,15 +31,15 @@ func RateLimit() echo.MiddlewareFunc {
 			return true
 		},
 		Store: rateStore,
-		IdentifierExtractor: func(ctx echo.Context) (string, error) {
+		IdentifierExtractor: func(ctx *echo.Context) (string, error) {
 			return ctx.RealIP(), nil
 		},
-		ErrorHandler: func(context echo.Context, err error) error {
+		ErrorHandler: func(context *echo.Context, err error) error {
 			return context.JSON(http.StatusForbidden, map[string]string{
 				"error": "Rate limit exceeded. Please try again later.",
 			})
 		},
-		DenyHandler: func(context echo.Context, identifier string, err error) error {
+		DenyHandler: func(context *echo.Context, identifier string, err error) error {
 			return context.JSON(http.StatusTooManyRequests, map[string]string{
 				"error": "Too many requests. Please slow down.",
 			})

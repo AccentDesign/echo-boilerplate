@@ -2,6 +2,12 @@ package cmd
 
 import (
 	"context"
+	"errors"
+	"fmt"
+	"log"
+	"net/http"
+	"time"
+
 	"echo.go.dev/pkg/config"
 	"echo.go.dev/pkg/domain"
 	apperrors "echo.go.dev/pkg/errors"
@@ -9,14 +15,9 @@ import (
 	"echo.go.dev/pkg/storage/db"
 	"echo.go.dev/pkg/transport/middleware"
 	"echo.go.dev/pkg/transport/validate"
-	"errors"
-	"fmt"
-	"github.com/labstack/echo/v4"
-	echomiddleware "github.com/labstack/echo/v4/middleware"
+	"github.com/labstack/echo/v5"
+	echomiddleware "github.com/labstack/echo/v5/middleware"
 	"github.com/spf13/cobra"
-	"log"
-	"net/http"
-	"time"
 )
 
 var cmdServer = &cobra.Command{
@@ -37,19 +38,18 @@ func runServer() {
 	defer dbPool.Close()
 
 	engine := echo.New()
-	engine.Debug = cfg.Server.Debug
 	engine.Validator = validate.New()
 	engine.HTTPErrorHandler = apperrors.HttpErrorHandler
 
 	engine.Use(
 		echomiddleware.Recover(),
 		middleware.Logger(),
-		middleware.Secure(),
-		middleware.CSRF(),
-		middleware.CORS(),
+		middleware.Secure(cfg),
+		middleware.CSRF(cfg),
+		middleware.CORS(cfg),
 		middleware.RateLimit(),
 		middleware.Gzip(),
-		middleware.Session(),
+		middleware.Session(cfg),
 		middleware.Context(dbPool),
 	)
 

@@ -4,12 +4,11 @@ import (
 	"echo.go.dev/pkg/config"
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 )
 
 // Session returns an Echo middleware function for the session.
-func Session() echo.MiddlewareFunc {
-	cfg := config.GetConfig()
+func Session(cfg *config.Config) echo.MiddlewareFunc {
 	sessionStore := sessions.NewCookieStore(cfg.Session.KeyBytes(), cfg.Session.EncKeyBytes())
 
 	sessionStore.Options = &sessions.Options{

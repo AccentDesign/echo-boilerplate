@@ -1,12 +1,13 @@
 package auth
 
 import (
-	"echo.go.dev/pkg/transport/middleware"
-	"echo.go.dev/pkg/ui/pages"
 	"encoding/gob"
-	"github.com/labstack/echo/v4"
 	"net/http"
 	"strings"
+
+	"echo.go.dev/pkg/transport/middleware"
+	"echo.go.dev/pkg/ui/pages"
+	"github.com/labstack/echo/v5"
 )
 
 func init() {
@@ -23,24 +24,21 @@ func Router(e *echo.Echo) {
 	}
 }
 
-func loginHandler(c echo.Context) error {
-	cc := c.(*middleware.CustomContext)
+func loginHandler(c *echo.Context) error {
+	cc := c.Get("custom_context").(*middleware.CustomContext)
 	cc.Session.Options.MaxAge = -1
 	if err := cc.Session.Save(c.Request(), c.Response()); err != nil {
 		return err
 	}
-	return cc.RenderComponent(http.StatusOK, pages.Login(pages.LoginProps{
-		Csrf: c.Get("csrf").(string),
-	}))
+	return cc.RenderComponent(http.StatusOK, pages.Login(pages.LoginProps{}))
 }
 
-func loginPostHandler(c echo.Context) error {
-	cc := c.(*middleware.CustomContext)
+func loginPostHandler(c *echo.Context) error {
+	cc := c.Get("custom_context").(*middleware.CustomContext)
 	ctx := c.Request().Context()
 
 	invalid := func() error {
 		return cc.RenderComponent(http.StatusOK, pages.Login(pages.LoginProps{
-			Csrf:  c.Get("csrf").(string),
 			Error: "invalid email or password",
 		}))
 	}
@@ -78,8 +76,8 @@ func loginPostHandler(c echo.Context) error {
 	return c.NoContent(http.StatusNoContent)
 }
 
-func logoutHandler(c echo.Context) error {
-	cc := c.(*middleware.CustomContext)
+func logoutHandler(c *echo.Context) error {
+	cc := c.Get("custom_context").(*middleware.CustomContext)
 	cc.Session.Options.MaxAge = -1
 	if err := cc.Session.Save(c.Request(), c.Response()); err != nil {
 		return err

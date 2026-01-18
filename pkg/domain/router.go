@@ -3,7 +3,7 @@ package domain
 import (
 	"echo.go.dev/pkg/domain/auth"
 	"echo.go.dev/pkg/domain/home"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 )
 
 func Router(e *echo.Echo) {
